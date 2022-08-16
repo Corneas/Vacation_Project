@@ -14,14 +14,35 @@ public class BezierCurve : MonoBehaviour
     public Vector3 P3;
     public Vector3 P4;
 
+    private bool isMaxValue = false;
+    private bool isMinValue = false;
+
+    private void Start()
+    {
+        isMinValue = true;
+    }
+
     private void Update()
     {
-        value += Time.deltaTime;
-        targetObj.transform.position = BezierTest(P1, P2, P3, P4, value);
-        if(value >= 1)
+        if (isMinValue)
         {
-            value = 0;
+            value += Time.deltaTime * 0.8f;
+            if(value >= 1f)
+            {
+                isMinValue = false;
+                isMaxValue = true;
+            }
         }
+        else if (isMaxValue)
+        {
+            value -= Time.deltaTime * 0.8f;
+            if(value <= 0f)
+            {
+                isMaxValue = false;
+                isMinValue = true;
+            }
+        }
+        targetObj.transform.position = BezierTest(P1, P2, P3, P4, value);
     }
 
     public Vector3 BezierTest(Vector3 _P1, Vector3 _P2, Vector3 _P3, Vector3 _P4, float value)
