@@ -6,9 +6,9 @@ public class BulletMove : MonoBehaviour
 {
     public float bulletSpd = 10f;
 
-    private void Start()
+    private void OnEnable()
     {
-        Invoke("Pool", 2f);
+        Invoke("Pool", 5f);
     }
 
     private void Update()

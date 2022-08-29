@@ -8,6 +8,8 @@ public class Boss : MonoBehaviour
     private GameObject bulletPre;
     [SerializeField]
     private GameObject target;
+    [SerializeField]
+    private Transform[] bulletSpawnPos_Pattern3;
 
     private List<GameObject> bulletList = new List<GameObject>();
 
@@ -25,6 +27,7 @@ public class Boss : MonoBehaviour
 
     IEnumerator BossPattern()
     {
+
         yield return new WaitForSeconds(3f);
 
         //Pattern 1
@@ -32,7 +35,13 @@ public class Boss : MonoBehaviour
 
         yield return new WaitForSeconds(10f);
 
+        //Pattern2
         StartCoroutine(CircleFireGoto());
+
+        yield return new WaitForSeconds(10f);
+
+        //Pattern3
+        StartCoroutine(SpawnCircleBullets());
 
         yield return null;
     }
@@ -55,14 +64,14 @@ public class Boss : MonoBehaviour
             {
                 GameObject bullet = null;
 
-                bullet = InstaniateOrSpawn(bullet);
+                bullet = InstaniateOrSpawn(bullet,gameObject.transform);
 
                 bullet.transform.rotation = Quaternion.Euler(0, 0, j);
 
                 yield return new WaitForSeconds(0.01f);
             }
         }
-    }
+    } // pattern 1
 
     IEnumerator CircleFireGoto()
     {
@@ -73,20 +82,20 @@ public class Boss : MonoBehaviour
             for (int j = 0; j <= 360; j += 20)
             {
                 GameObject bullet = null;
-                bullet = InstaniateOrSpawn(bullet);
+                bullet = InstaniateOrSpawn(bullet, gameObject.transform);
                 bullet.transform.rotation = Quaternion.Euler(0, 0, j);
                 bulletMoves.Add(bullet.GetComponent<BulletMove>());
             }
 
-            StartCoroutine(moveToPlayer(bulletMoves.ToArray()));
+            StartCoroutine(MoveToPlayer(bulletMoves.ToArray()));
 
             yield return new WaitForSeconds(1f);
             bulletMoves.Clear();
 
         }
-    }
+    } // pattern 2 - 1
 
-    IEnumerator moveToPlayer(BulletMove[] bulletMoves)
+    IEnumerator MoveToPlayer(BulletMove[] bulletMoves)
     {
         yield return new WaitForSeconds(0.1f);
 
@@ -104,16 +113,56 @@ public class Boss : MonoBehaviour
 
         for(int i = 0; i < bulletMoves.Length; ++i)
         {
-            var rot = target.transform.position - bulletMoves[i].transform.position;
+            var rot = (target.transform.position - bulletMoves[i].transform.position).normalized;
 
             var angle = Mathf.Atan2(rot.y, rot.x) * Mathf.Rad2Deg;
 
             bulletMoves[i].transform.rotation = Quaternion.Euler(0, 0, angle);
         }
         yield return null;
+    } // pattern 2 - 2
+
+    IEnumerator SpawnCircleBullets()
+    {
+        List<BulletMove> bullets = new List<BulletMove>();
+
+        for(int j = 0; j < bulletSpawnPos_Pattern3.Length; ++j)
+        {
+            for (int i = 0; i <= 360; i += 13)
+            {
+                GameObject bullet = null;
+                bullet = InstaniateOrSpawn(bullet, bulletSpawnPos_Pattern3[j]);
+                bullet.transform.rotation = Quaternion.Euler(0, 0, i);
+                bullets.Add(bullet.GetComponent<BulletMove>());
+            }
+
+            StartCoroutine(MoveToDown(bullets.ToArray()));
+            yield return new WaitForSeconds(1f);
+            bullets.Clear();
+        }
+
+        yield return null;
     }
 
-    GameObject InstaniateOrSpawn(GameObject bullet)
+    IEnumerator MoveToDown(BulletMove[] bulletMoves)
+    {
+        yield return new WaitForSeconds(0.25f);
+
+        for(int i = 0; i < bulletMoves.Length; ++i)
+        {
+            bulletMoves[i].bulletSpd = 0f;
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        for (int i = 0; i < bulletMoves.Length; ++i)
+        {
+            bulletMoves[i].transform.rotation = Quaternion.Euler(0,0,bulletMoves[i].transform.rotation.z - 90);
+            bulletMoves[i].bulletSpd = 10f;
+        }
+    }
+
+    GameObject InstaniateOrSpawn(GameObject bullet, Transform bulletSpawnPos)
     {
         if (PoolManager.Instance.transform.childCount > 0)
         {
@@ -124,9 +173,9 @@ public class Boss : MonoBehaviour
         {
             bullet = Instantiate(bulletPre, transform.position, Quaternion.identity);
         }
-        bullet.transform.position = transform.position;
+        bullet.transform.position = bulletSpawnPos.position;
         bullet.transform.SetParent(null);
 
         return bullet;
-    }
+    } // pool
 }
