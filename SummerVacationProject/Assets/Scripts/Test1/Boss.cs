@@ -11,7 +11,11 @@ public class Boss : MonoBehaviour
     [SerializeField]
     private Transform[] bulletSpawnPos_Pattern3;
 
-    private List<GameObject> bulletList = new List<GameObject>();
+    [Header("BezierCurve")]
+    [SerializeField]
+    private Vector3[] bezierCurveMovePos;
+    private float bezierCurveMoveSpeed = 0f;
+
 
     // Dialogue 기능 추가 예정
     private void Start() 
@@ -22,6 +26,7 @@ public class Boss : MonoBehaviour
             bulletObj.SetActive(false);
             bulletObj.transform.SetParent(PoolManager.Instance.transform);
         }
+
         StartCoroutine(BossPattern());
     }
 
@@ -34,6 +39,11 @@ public class Boss : MonoBehaviour
         StartCoroutine(CircleFire());
 
         yield return new WaitForSeconds(10f);
+
+        bezierCurveMoveSpeed = 1f;
+        StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
+
+        yield return new WaitForSeconds(2f);
 
         //Pattern2
         StartCoroutine(CircleFireGoto());
@@ -146,7 +156,7 @@ public class Boss : MonoBehaviour
 
     IEnumerator MoveToDown(BulletMove[] bulletMoves)
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.2f);
 
         for(int i = 0; i < bulletMoves.Length; ++i)
         {

@@ -9,12 +9,15 @@ public class BezierCurve : MonoSingleton<BezierCurve>
     //[Range(0, 1)]
     //public float value;
 
-    public void BezierCurveMove(GameObject target, Vector3 P1, Vector3 P2, Vector3 P3, Vector3 P4, float value)
+    public IEnumerator BezierCurveMove(GameObject target, Vector3 P1, Vector3 P2, Vector3 P3, Vector3 P4, float speed)
     {
-        while(value == 1)
+        Debug.Log("Move");
+        float value = 0;
+        while(value <= 1)
         {
-            value += Time.deltaTime;
+            value += Time.deltaTime * speed;
             target.transform.position = BezierTest(P1, P2, P3, P4, value);
+            yield return new WaitForEndOfFrame();
         }
     }
 
