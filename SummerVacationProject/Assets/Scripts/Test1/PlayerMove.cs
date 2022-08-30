@@ -30,7 +30,7 @@ public class PlayerMove : MonoSingleton<PlayerMove>
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        Vector3 playerDir = new Vector3(h, v, 0).normalized;
+        Vector3 dir = new Vector3(h, v, 0).normalized;
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -41,7 +41,14 @@ public class PlayerMove : MonoSingleton<PlayerMove>
             moveSpeed = 10f;
         }
 
-        transform.position += playerDir * Time.deltaTime * moveSpeed;
+        transform.Translate(dir * moveSpeed * Time.deltaTime);
+
+        Vector3 playerPos = Camera.main.WorldToViewportPoint(transform.position);
+
+        playerPos.x = Mathf.Clamp01(playerPos.x);
+        playerPos.y = Mathf.Clamp01(playerPos.y);
+
+        transform.position = Camera.main.ViewportToWorldPoint(playerPos);
     }
 
     private IEnumerator Fire()
@@ -51,6 +58,10 @@ public class PlayerMove : MonoSingleton<PlayerMove>
             if (Input.GetMouseButton(0))
             {
                 GameObject bullet = null;
+                Vector3 mousePos = Input.mousePosition;
+                Vector3 dir = (mousePos - bulletFireTransform.position).normalized;
+                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                bulletFireTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
                 InstaniateOrSpawn(bullet, bulletFireTransform);
 
                 yield return new WaitForSeconds(0.1f);
@@ -67,12 +78,12 @@ public class PlayerMove : MonoSingleton<PlayerMove>
 
     GameObject InstaniateOrSpawn(GameObject bullet, Transform bulletSpawnPos)
     {
-        if (transform.childCount > 0)
+        if (transform.childCount > 1)
         {
-            bullet = transform.GetChild(0).gameObject;
+            bullet = transform.GetChild(1).gameObject;
             bullet.SetActive(true);
         }
-        else if (transform.childCount <= 0)
+        else if (transform.childCount <= 1)
         {
             bullet = Instantiate(bulletPre, transform.position, Quaternion.identity);
         }
