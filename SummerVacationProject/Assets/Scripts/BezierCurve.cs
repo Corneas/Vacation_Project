@@ -11,7 +11,7 @@ public class BezierCurve : MonoSingleton<BezierCurve>
 
     public IEnumerator BezierCurveMove(GameObject target, Vector3 P1, Vector3 P2, Vector3 P3, Vector3 P4, float speed)
     {
-        Debug.Log("Move");
+        Debug.Log("BezierCurveMove");
         float value = 0;
         while(value <= 1)
         {

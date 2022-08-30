@@ -655,7 +655,7 @@ GameObject:
   - component: {fileID: 1614349891}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -756,6 +756,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  bulletFireTransform: {fileID: 1614349889}
+  bulletPre: {fileID: 3235981996858897480, guid: 6c23cfc8f4832f744b5878d2abc591a3, type: 3}
 --- !u!1 &2141009908
 GameObject:
   m_ObjectHideFlags: 0

@@ -190,7 +190,7 @@ public class Boss : MonoBehaviour
         }
     }
 
-    GameObject InstaniateOrSpawn(GameObject bullet, Transform bulletSpawnPos)
+    public GameObject InstaniateOrSpawn(GameObject bullet, Transform bulletSpawnPos)
     {
         if (PoolManager.Instance.transform.childCount > 0)
         {

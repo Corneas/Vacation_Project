@@ -14,13 +14,19 @@ public class BulletMove : MonoBehaviour
     private void Update()
     {
         transform.Translate(Vector3.right * bulletSpd * Time.deltaTime, Space.Self);
-        //transform.position += Vector3.right * bulletSpd * Time.deltaTime;
     }
 
     public void Pool()
     {
         gameObject.SetActive(false);
-        transform.SetParent(PoolManager.Instance.transform);
+        if(gameObject.name == "PlayerBullet(Clone)")
+        {
+            transform.SetParent(PlayerMove.Instance.transform);
+        }
+        else
+        {
+            transform.SetParent(PoolManager.Instance.transform);
+        }
     }
 
 }
