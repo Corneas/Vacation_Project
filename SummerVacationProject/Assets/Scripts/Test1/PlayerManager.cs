@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoSingleton<PlayerMove>
+public class PlayerManager : MonoSingleton<PlayerManager>
 {
+    public PlayerBase Base;
+
     [SerializeField]
     private float moveSpeed = 10f;
     [SerializeField]
@@ -11,8 +13,15 @@ public class PlayerMove : MonoSingleton<PlayerMove>
     [SerializeField]
     private GameObject bulletPre;
 
+    private SpriteRenderer spriteRenderer = null;
+
+    private bool isDamaged = false;
+    private bool isDead = false;
+
     private void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        Base = new PlayerBase();
         StartCoroutine(Fire());
     }
 
@@ -32,7 +41,7 @@ public class PlayerMove : MonoSingleton<PlayerMove>
 
         Vector3 dir = new Vector3(h, v, 0).normalized;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             moveSpeed = 5f;
         }
@@ -55,13 +64,13 @@ public class PlayerMove : MonoSingleton<PlayerMove>
     {
         while (true)
         {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 dir = (mousePos - bulletFireTransform.position).normalized;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            bulletFireTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
             if (Input.GetMouseButton(0))
             {
                 GameObject bullet = null;
-                Vector3 mousePos = Input.mousePosition;
-                Vector3 dir = (mousePos - bulletFireTransform.position).normalized;
-                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                bulletFireTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
                 InstaniateOrSpawn(bullet, bulletFireTransform);
 
                 yield return new WaitForSeconds(0.1f);
@@ -73,7 +82,6 @@ public class PlayerMove : MonoSingleton<PlayerMove>
 
             yield return null;
         }
-            
     }
 
     GameObject InstaniateOrSpawn(GameObject bullet, Transform bulletSpawnPos)
@@ -88,9 +96,36 @@ public class PlayerMove : MonoSingleton<PlayerMove>
             bullet = Instantiate(bulletPre, transform.position, Quaternion.identity);
         }
         bullet.transform.position = bulletSpawnPos.position;
+        bullet.transform.rotation = bulletSpawnPos.rotation;
         bullet.transform.SetParent(null);
 
         return bullet;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("enemyBullet"))
+        {
+            collision.GetComponent<BulletMove>().Pool();
+            StartCoroutine(Damaged());
+        }
+    }
+
+    public IEnumerator Damaged()
+    {
+        if (!isDamaged)
+        {
+            isDamaged = true;
+            GameManager.Instance.Dead();
+            Base.Hp -= 1;
+            for(int i = 0; i < 3; i++)
+            {
+                spriteRenderer.enabled = false;
+                yield return new WaitForSeconds(0.2f);
+                spriteRenderer.enabled = true;
+                yield return new WaitForSeconds(0.2f);
+            }
+            isDamaged = false;
+        }
+    }
 }

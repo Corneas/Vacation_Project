@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public float maxPosX { private set; get; } = 9f;
-    public float maxPosY { private set; get; } = 5f;
-
+    public void Dead()
+    {
+        if(PlayerManager.Instance.Base.Hp <= 0)
+        {
+            Debug.Log("»ç¸Á");
+        }
+    }
 }

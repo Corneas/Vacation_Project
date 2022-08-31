@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletMove : MonoBehaviour
+public class BulletMove : MonoSingleton<BulletMove>
 {
     public float bulletSpd = 10f;
 
@@ -21,7 +21,7 @@ public class BulletMove : MonoBehaviour
         gameObject.SetActive(false);
         if(gameObject.name == "PlayerBullet(Clone)")
         {
-            transform.SetParent(PlayerMove.Instance.transform);
+            transform.SetParent(PlayerManager.Instance.transform);
         }
         else
         {

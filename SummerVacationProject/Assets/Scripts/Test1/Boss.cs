@@ -16,7 +16,6 @@ public class Boss : MonoBehaviour
     private Vector3[] bezierCurveMovePos;
     private float bezierCurveMoveSpeed = 0f;
 
-
     // Dialogue 기능 추가 예정
     private void Start() 
     {
