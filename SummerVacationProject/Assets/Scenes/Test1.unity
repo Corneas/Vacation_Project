@@ -788,7 +788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9943bb7f2b79da24ca9ce444ff776b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 4
   bulletFireTransform: {fileID: 720711945}
   bulletPre: {fileID: 3235981996858897480, guid: 6c23cfc8f4832f744b5878d2abc591a3, type: 3}
 --- !u!50 &1614349892
