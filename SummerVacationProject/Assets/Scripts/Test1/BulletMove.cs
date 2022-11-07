@@ -8,7 +8,12 @@ public class BulletMove : MonoSingleton<BulletMove>
 
     private void OnEnable()
     {
-        Invoke("Pool", 5f);
+        bulletSpd = 10f;
+    }
+
+    private void OnBecameInvisible()
+    {
+        Pool();
     }
 
     private void Update()
@@ -19,6 +24,7 @@ public class BulletMove : MonoSingleton<BulletMove>
     public void Pool()
     {
         gameObject.SetActive(false);
+        gameObject.transform.SetParent(null);
         if(gameObject.name == "PlayerBullet(Clone)")
         {
             transform.SetParent(PlayerManager.Instance.transform);

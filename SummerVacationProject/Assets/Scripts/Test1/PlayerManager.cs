@@ -113,11 +113,18 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
     public IEnumerator Damaged()
     {
+        if (isDead) yield return null;
         if (!isDamaged)
         {
             isDamaged = true;
             GameManager.Instance.Dead();
             Base.Hp -= 1;
+            if(Base.Hp <= 0)
+            {
+                isDead = true;
+                Dead();
+                yield return null;
+            }
             for(int i = 0; i < 3; i++)
             {
                 spriteRenderer.enabled = false;
@@ -126,6 +133,14 @@ public class PlayerManager : MonoSingleton<PlayerManager>
                 yield return new WaitForSeconds(0.2f);
             }
             isDamaged = false;
+        }
+    }
+
+    public void Dead()
+    {
+        if (isDead)
+        {
+            gameObject.SetActive(false);
         }
     }
 }

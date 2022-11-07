@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Boss : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Boss : MonoBehaviour
     private GameObject target;
     [SerializeField]
     private Transform[] bulletSpawnPos_Pattern3;
+    [SerializeField]
+    private GameObject rotateBulletParent;
 
     [Header("BezierCurve")]
     [SerializeField]
@@ -29,28 +32,41 @@ public class Boss : MonoBehaviour
         StartCoroutine(BossPattern());
     }
 
+    private bool isRotate = false;
+
+    private void Update()
+    {
+        if (isRotate)
+        {
+            rotateBulletParent.transform.Rotate(0, 0, 10 * Time.deltaTime);
+        }
+    }
+
     IEnumerator BossPattern()
     {
 
         yield return new WaitForSeconds(3f);
 
-        //Pattern 1
-        StartCoroutine(CircleFire());
+        ////Pattern 1
+        //StartCoroutine(CircleFire());
 
-        yield return new WaitForSeconds(10f);
+        //yield return new WaitForSeconds(10f);
 
-        bezierCurveMoveSpeed = 1f;
-        StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
+        //bezierCurveMoveSpeed = 1f;
+        //StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
 
-        yield return new WaitForSeconds(2f);
+        //yield return new WaitForSeconds(2f);
 
-        //Pattern2
-        StartCoroutine(CircleFireGoto());
+        ////Pattern2
+        //StartCoroutine(CircleFireGoto());
 
-        yield return new WaitForSeconds(10f);
+        //yield return new WaitForSeconds(10f);
 
-        //Pattern3
-        StartCoroutine(SpawnCircleBullets());
+        ////Pattern3
+        //StartCoroutine(SpawnCircleBullets());
+
+        //yield return new WaitForSeconds(6f);
+        StartCoroutine(Pattern3());
 
         yield return null;
     }
@@ -187,6 +203,39 @@ public class Boss : MonoBehaviour
             bulletMoves[i].transform.rotation = Quaternion.Euler(0,0,bulletMoves[i].transform.rotation.z - 90);
             bulletMoves[i].bulletSpd = 10f;
         }
+    }
+
+    IEnumerator Pattern3()
+    {
+        transform.DOMove(Vector3.zero, 1f);
+        yield return new WaitForSeconds(1f);
+
+        float fireAngle = 0f;
+        float angle = 13f;
+
+        for(int i = 0; i < 10; ++i)
+        {
+            for (int j = 0; j < 40; ++j)
+            {
+                GameObject bullet = null;
+
+                bullet = InstaniateOrSpawn(bullet, gameObject.transform);
+                Vector2 direction = new Vector2(Mathf.Cos(fireAngle * Mathf.Deg2Rad), Mathf.Sin(fireAngle * Mathf.Deg2Rad));
+                bullet.transform.SetParent(rotateBulletParent.transform);
+                bullet.transform.right = direction;
+
+                bullet.GetComponent<BulletMove>().bulletSpd = 3f;
+                fireAngle += angle;
+                if (fireAngle >= 360)
+                {
+                    fireAngle -= 360;
+                }
+            }
+            isRotate = true;
+            yield return new WaitForSeconds(1f);
+        }
+
+        yield return null;
     }
 
     public GameObject InstaniateOrSpawn(GameObject bullet, Transform bulletSpawnPos)
