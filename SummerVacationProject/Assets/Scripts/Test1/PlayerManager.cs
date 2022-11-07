@@ -106,7 +106,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     {
         if (collision.gameObject.CompareTag("enemyBullet"))
         {
-            collision.GetComponent<BulletMove>().Pool();
+            collision.transform.SetParent(null);
+            collision.gameObject.SetActive(false);
             StartCoroutine(Damaged());
         }
     }

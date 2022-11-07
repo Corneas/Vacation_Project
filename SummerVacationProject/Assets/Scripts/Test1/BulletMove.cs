@@ -11,20 +11,22 @@ public class BulletMove : MonoSingleton<BulletMove>
         bulletSpd = 10f;
     }
 
-    private void OnBecameInvisible()
-    {
-        Pool();
-    }
-
     private void Update()
     {
         transform.Translate(Vector3.right * bulletSpd * Time.deltaTime, Space.Self);
+
+        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+        if (pos.x < 0f || pos.x > 1f || pos.y < 0f || pos.y > 1f)
+        {
+            Pool();
+        }
+        transform.position = Camera.main.ViewportToWorldPoint(pos);
+
     }
 
     public void Pool()
     {
         gameObject.SetActive(false);
-        gameObject.transform.SetParent(null);
         if(gameObject.name == "PlayerBullet(Clone)")
         {
             transform.SetParent(PlayerManager.Instance.transform);
