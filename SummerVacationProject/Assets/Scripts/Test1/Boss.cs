@@ -74,11 +74,13 @@ public class Boss : MonoBehaviour
     IEnumerator CircleFire()
     {
         float fireAngle = 0f;
-        float angle = 13f;
+        float angle = 10f;
 
         for(int i = 0; i < 15; ++i)
         {
-            for(int j = 0; j < 40; ++j)
+            angle = i % 2 == 0 ? 10f : 13f;
+
+            for(int j = 0; j < 36; ++j)
             {
                 GameObject bullet = null;
 
@@ -211,11 +213,11 @@ public class Boss : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         float fireAngle = 0f;
-        float angle = 13f;
+        float angle = 10f;
 
         for(int i = 0; i < 10; ++i)
         {
-            for (int j = 0; j < 40; ++j)
+            for (int j = 0; j < 36; ++j)
             {
                 GameObject bullet = null;
 
