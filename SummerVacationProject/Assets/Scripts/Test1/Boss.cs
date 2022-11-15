@@ -38,7 +38,7 @@ public class Boss : MonoBehaviour
     {
         if (isRotate)
         {
-            rotateBulletParent.transform.Rotate(0, 0, 10 * Time.deltaTime);
+            rotateBulletParent.transform.Rotate(0, 0, 20 * Time.deltaTime);
         }
     }
 
@@ -47,8 +47,8 @@ public class Boss : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        ////Pattern 1
-        //StartCoroutine(CircleFire());
+        //Pattern 1
+        StartCoroutine(CircleFire());
 
         //yield return new WaitForSeconds(10f);
 
@@ -66,7 +66,7 @@ public class Boss : MonoBehaviour
         //StartCoroutine(SpawnCircleBullets());
 
         //yield return new WaitForSeconds(6f);
-        StartCoroutine(Pattern3());
+        //StartCoroutine(Pattern3());
 
         yield return null;
     }
@@ -78,7 +78,7 @@ public class Boss : MonoBehaviour
 
         for(int i = 0; i < 15; ++i)
         {
-            angle = i % 2 == 0 ? 10f : 13f;
+            fireAngle = i % 2 == 0 ? 0f : 15f;
 
             for(int j = 0; j < 36; ++j)
             {
