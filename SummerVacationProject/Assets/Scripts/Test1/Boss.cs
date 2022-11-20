@@ -48,26 +48,29 @@ public class Boss : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        //Pattern 1
-        StartCoroutine(CircleFire());
+        ////Pattern 1
+        //StartCoroutine(CircleFire());
 
-        yield return new WaitForSeconds(10f);
+        //yield return new WaitForSeconds(10f);
 
-        bezierCurveMoveSpeed = 1f;
-        StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
+        //bezierCurveMoveSpeed = 1f;
+        //StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
 
-        yield return new WaitForSeconds(2f);
+        //yield return new WaitForSeconds(2f);
 
-        //Pattern2
-        StartCoroutine(CircleFireGoto());
+        ////Pattern2
+        //StartCoroutine(CircleFireGoto());
 
-        yield return new WaitForSeconds(10f);
+        //yield return new WaitForSeconds(10f);
 
-        //Pattern3
-        StartCoroutine(SpawnCircleBullets());
+        ////Pattern3
+        //StartCoroutine(SpawnCircleBullets());
 
-        yield return new WaitForSeconds(6f);
-        StartCoroutine(Pattern3());
+        //yield return new WaitForSeconds(6f);
+        //StartCoroutine(Pattern3());
+
+        //yield return new WaitForSeconds(10f);
+        StartCoroutine(CircleFireNCircleFireGoto());
 
         yield return null;
     }
@@ -237,6 +240,36 @@ public class Boss : MonoBehaviour
             isRotate = true;
             yield return new WaitForSeconds(1f);
         }
+
+        yield return null;
+    }
+
+    IEnumerator CircleFireNCircleFireGoto()
+    {
+        transform.DOMove(new Vector3(0, 2.5f, 0), 1f);
+        yield return new WaitForSeconds(1f);
+
+        float delta = 2.0f;
+        float speed = 5.0f;
+        Vector3 pos;
+        Vector3 v;
+        float curTime = 0f;
+        pos = transform.position;
+
+        StartCoroutine(CircleFire());
+        StartCoroutine(CircleFireGoto());
+
+        while (curTime < 8f)
+        {
+            v = pos;
+
+            v.x += delta * Mathf.Sin(curTime * speed);
+            transform.position = v;
+            curTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        transform.DOMove(new Vector3(0, 2.5f, 0), 1f);
 
         yield return null;
     }
