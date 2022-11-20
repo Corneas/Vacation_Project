@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class Boss : MonoBehaviour
 {
+    // 추후 FSM으로 패턴 나눠주기
     [SerializeField]
     private GameObject bulletPre;
     [SerializeField]
@@ -50,23 +51,23 @@ public class Boss : MonoBehaviour
         //Pattern 1
         StartCoroutine(CircleFire());
 
-        //yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(10f);
 
-        //bezierCurveMoveSpeed = 1f;
-        //StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
+        bezierCurveMoveSpeed = 1f;
+        StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
 
-        //yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f);
 
-        ////Pattern2
-        //StartCoroutine(CircleFireGoto());
+        //Pattern2
+        StartCoroutine(CircleFireGoto());
 
-        //yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(10f);
 
-        ////Pattern3
-        //StartCoroutine(SpawnCircleBullets());
+        //Pattern3
+        StartCoroutine(SpawnCircleBullets());
 
-        //yield return new WaitForSeconds(6f);
-        //StartCoroutine(Pattern3());
+        yield return new WaitForSeconds(6f);
+        StartCoroutine(Pattern3());
 
         yield return null;
     }
