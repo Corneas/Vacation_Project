@@ -73,7 +73,10 @@ public class Boss : MonoBehaviour
         //StartCoroutine(CircleFireNCircleFireGoto());
         //yield return new WaitForSeconds(10f);
 
-        StartCoroutine(CircleFire2());
+        //StartCoroutine(CircleFire2());
+        //yield return new WaitForSeconds(13f);
+
+        StartCoroutine(BulletArcFireDown());
 
         yield return null;
     }
@@ -406,6 +409,29 @@ public class Boss : MonoBehaviour
         }
 
         yield return null;
+    }
+
+    IEnumerator BulletArcFireDown()
+    {
+        transform.DOMove(Vector3.zero, 1f);
+        yield return new WaitForSeconds(1f);
+
+        float fireAngle = -45f;
+        for(int i = 0; i < 8; ++i)
+        {
+            for(int j = 0; j < 9; ++j)
+            {
+                GameObject bullet = null;
+
+                bullet = InstaniateOrSpawn(bullet, transform);
+
+                Vector2 direction = new Vector2(Mathf.Sin(fireAngle * Mathf.Deg2Rad), Mathf.Cos(fireAngle * Mathf.Deg2Rad));
+                bullet.transform.right = direction;
+
+                fireAngle -= 10;
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
     public GameObject InstaniateOrSpawn(GameObject bullet, Transform bulletSpawnPos)
