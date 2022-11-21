@@ -108,33 +108,39 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         {
             collision.transform.SetParent(null);
             collision.gameObject.SetActive(false);
+            TakeDamage();
+        }
+    }
+
+    private void TakeDamage()
+    {
+        if (isDead) return;
+        if (!isDamaged)
+        {
+            isDamaged = true;
+            //GameManager.Instance.Dead();
+            Base.Hp--;
+            Debug.Log("PlayerHP : " + Base.Hp);
+            if(Base.Hp <= 0)
+            {
+                isDead = true;
+                Dead();
+            }
             StartCoroutine(Damaged());
         }
     }
 
     public IEnumerator Damaged()
     {
-        if (isDead) yield return null;
-        if (!isDamaged)
+        for(int i = 0; i < 3; i++)
         {
-            isDamaged = true;
-            GameManager.Instance.Dead();
-            Base.Hp -= 1;
-            if(Base.Hp <= 0)
-            {
-                isDead = true;
-                Dead();
-                yield return null;
-            }
-            for(int i = 0; i < 3; i++)
-            {
-                spriteRenderer.enabled = false;
-                yield return new WaitForSeconds(0.2f);
-                spriteRenderer.enabled = true;
-                yield return new WaitForSeconds(0.2f);
-            }
-            isDamaged = false;
+            spriteRenderer.enabled = false;
+            yield return new WaitForSeconds(0.2f);
+            spriteRenderer.enabled = true;
+            yield return new WaitForSeconds(0.2f);
         }
+
+        isDamaged = false;
     }
 
     public void Dead()

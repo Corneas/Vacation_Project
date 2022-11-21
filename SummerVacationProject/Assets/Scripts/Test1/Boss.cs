@@ -20,9 +20,13 @@ public class Boss : MonoBehaviour
     private Vector3[] bezierCurveMovePos;
     private float bezierCurveMoveSpeed = 0f;
 
+    public BossBase Base;
+
     // Dialogue 기능 추가 예정
     private void Start() 
     {
+        Base = new BossBase();
+
         for(int i = 0; i < 100; ++i)
         {
             var bulletObj = Instantiate(bulletPre, transform.position, Quaternion.identity);
@@ -45,31 +49,27 @@ public class Boss : MonoBehaviour
 
     IEnumerator BossPattern()
     {
-
         yield return new WaitForSeconds(3f);
 
-        ////Pattern 1
-        //StartCoroutine(CircleFire());
+        //Pattern 1
+        StartCoroutine(CircleFire());
+        yield return new WaitForSeconds(10f);
 
-        //yield return new WaitForSeconds(10f);
+        bezierCurveMoveSpeed = 1f;
+        StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
+        yield return new WaitForSeconds(2f);
 
-        //bezierCurveMoveSpeed = 1f;
-        //StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
+        //Pattern2
+        StartCoroutine(CircleFireGoto());
+        yield return new WaitForSeconds(5f);
 
-        //yield return new WaitForSeconds(2f);
+        //Pattern3
+        StartCoroutine(SpawnCircleBullets());
+        yield return new WaitForSeconds(6f);
 
-        ////Pattern2
-        //StartCoroutine(CircleFireGoto());
+        StartCoroutine(Pattern3());
+        yield return new WaitForSeconds(12f);
 
-        //yield return new WaitForSeconds(10f);
-
-        ////Pattern3
-        //StartCoroutine(SpawnCircleBullets());
-
-        //yield return new WaitForSeconds(6f);
-        //StartCoroutine(Pattern3());
-
-        //yield return new WaitForSeconds(10f);
         StartCoroutine(CircleFireNCircleFireGoto());
 
         yield return null;
@@ -173,10 +173,12 @@ public class Boss : MonoBehaviour
 
     IEnumerator SpawnCircleBullets()
     {
+        Debug.Log(" 소환 ");
         List<BulletMove> bullets = new List<BulletMove>();
 
         for(int j = 0; j < bulletSpawnPos_Pattern3.Length; ++j)
         {
+            Debug.Log(j + "번째\n");
             for (int i = 0; i <= 360; i += 13)
             {
                 GameObject bullet = null;
@@ -216,6 +218,7 @@ public class Boss : MonoBehaviour
         transform.DOMove(Vector3.zero, 1f);
         yield return new WaitForSeconds(1f);
 
+        rotateBulletParent.transform.SetParent(null);
         float fireAngle = 0f;
         float angle = 10f;
 
@@ -240,6 +243,10 @@ public class Boss : MonoBehaviour
             isRotate = true;
             yield return new WaitForSeconds(1f);
         }
+
+        yield return new WaitForSeconds(3f);
+        rotateBulletParent.transform.SetParent(transform);
+        rotateBulletParent.transform.position = transform.position;
 
         yield return null;
     }
@@ -270,6 +277,7 @@ public class Boss : MonoBehaviour
         }
 
         transform.DOMove(new Vector3(0, 2.5f, 0), 1f);
+        yield return new WaitForSeconds(1f);
 
         yield return null;
     }
@@ -290,4 +298,14 @@ public class Boss : MonoBehaviour
 
         return bullet;
     } // pool
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("playerBullet"))
+        {
+            Debug.Log("BossHP : " + Base.Hp);
+            Base.Hp--;
+            Destroy(collision.gameObject);
+        }
+    }
 }

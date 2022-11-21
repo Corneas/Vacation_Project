@@ -16,7 +16,7 @@ public class BulletMove : MonoSingleton<BulletMove>
         transform.Translate(Vector3.right * bulletSpd * Time.deltaTime, Space.Self);
 
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
-        if (pos.x < 0f || pos.x > 1f || pos.y < 0f || pos.y > 1f)
+        if (pos.x < 0f || pos.x > 1f || pos.y < 0f || pos.y > 15f)
         {
             Pool();
         }

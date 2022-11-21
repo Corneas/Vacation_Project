@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class BossBase : MonoBehaviour
 {
-    private int maxHP;
-    private int hp = 0;
 
-    private void Start()
+    public BossBase()
     {
         CallBossInfo();
     }
+
+    private int maxHP;
+    private int hp;
 
     public int Hp
     {
@@ -21,7 +22,7 @@ public class BossBase : MonoBehaviour
         set
         {
             hp = value;
-            if(hp < 0)
+            if (hp < 0)
             {
                 hp = 0;
             }
