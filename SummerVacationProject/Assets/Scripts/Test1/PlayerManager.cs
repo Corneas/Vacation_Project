@@ -125,6 +125,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
             {
                 isDead = true;
                 Dead();
+                return;
             }
             StartCoroutine(Damaged());
         }
@@ -148,6 +149,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         if (isDead)
         {
             gameObject.SetActive(false);
+            Debug.Log("»ç¸Á!");
         }
     }
 }

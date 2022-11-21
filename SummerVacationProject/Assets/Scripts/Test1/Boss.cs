@@ -51,26 +51,29 @@ public class Boss : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
 
-        //Pattern 1
-        StartCoroutine(CircleFire());
-        yield return new WaitForSeconds(10f);
+        ////Pattern 1
+        //StartCoroutine(CircleFire());
+        //yield return new WaitForSeconds(10f);
 
-        bezierCurveMoveSpeed = 1f;
-        StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
-        yield return new WaitForSeconds(2f);
+        //bezierCurveMoveSpeed = 1f;
+        //StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
+        //yield return new WaitForSeconds(2f);
 
-        //Pattern2
-        StartCoroutine(CircleFireGoto());
-        yield return new WaitForSeconds(5f);
+        ////Pattern2
+        //StartCoroutine(CircleFireGoto());
+        //yield return new WaitForSeconds(5f);
 
-        //Pattern3
-        StartCoroutine(SpawnCircleBullets());
-        yield return new WaitForSeconds(6f);
+        ////Pattern3
+        //StartCoroutine(SpawnCircleBullets());
+        //yield return new WaitForSeconds(6f);
 
-        StartCoroutine(Pattern3());
-        yield return new WaitForSeconds(12f);
+        //StartCoroutine(Pattern3());
+        //yield return new WaitForSeconds(12f);
 
-        StartCoroutine(CircleFireNCircleFireGoto());
+        //StartCoroutine(CircleFireNCircleFireGoto());
+        //yield return new WaitForSeconds(10f);
+
+        StartCoroutine(CircleFire2());
 
         yield return null;
     }
@@ -282,6 +285,129 @@ public class Boss : MonoBehaviour
         yield return null;
     }
 
+    IEnumerator CircleFire2()
+    {
+        float fireAngle = 0f;
+        float accel = 0;
+        List<BulletMove> bullets = new List<BulletMove>();
+
+        for (int j = 0; j < 50; ++j)
+        {
+            for (int k = 0; k < 8; ++k)
+            {
+                GameObject bullet = null;
+
+                bullet = InstaniateOrSpawn(bullet, gameObject.transform);
+
+                Vector2 direction = new Vector2(Mathf.Cos(fireAngle * Mathf.Deg2Rad), Mathf.Sin(fireAngle * Mathf.Deg2Rad));
+                bullet.transform.right = direction;
+
+                bullets.Add(bullet.GetComponent<BulletMove>());
+
+                fireAngle += 45;
+                if (fireAngle >= 360)
+                {
+                    fireAngle -= 360;
+                }
+
+            }
+            StartCoroutine(BulletAcceleration(bullets.ToArray(), accel));
+            bullets.Clear();
+            fireAngle += 5;
+            accel += 0.1f;
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        StartCoroutine(CircleFire2_1());
+        yield return new WaitForSeconds(1.5f);
+
+        StartCoroutine(CircleFire2_2());
+    }
+
+    IEnumerator CircleFire2_1()
+    {
+        float fireAngle = 0f;
+        float accel = 0;
+        for (int i = 0; i < 4; ++i)
+        {
+            for (int j = 0; j < 10; ++j)
+            {
+                for (int k = 0; k < 3; ++k)
+                {
+                    GameObject bullet = null;
+
+                    bullet = InstaniateOrSpawn(bullet, gameObject.transform);
+                    bullet.GetComponent<BulletMove>().bulletSpd = 10f;
+                    Vector2 direction = new Vector2(Mathf.Sin(fireAngle * Mathf.Deg2Rad), Mathf.Cos(fireAngle * Mathf.Deg2Rad));
+                    bullet.transform.right = direction;
+
+                    fireAngle += 120;
+                    if (fireAngle >= 360)
+                    {
+                        fireAngle -= 360;
+                    }
+
+                }
+                fireAngle += 5;
+                accel += 0.4f;
+                yield return new WaitForSeconds(0.025f);
+            }
+
+            yield return new WaitForSeconds(0.7f);
+        }
+    }
+
+    IEnumerator CircleFire2_2()
+    {
+        float fireAngle = 0f;
+        float accel = 0;
+        List<BulletMove> bullets = new List<BulletMove>();
+
+        for (int j = 0; j < 75; ++j)
+        {
+            for (int k = 0; k < 8; ++k)
+            {
+                GameObject bullet = null;
+
+                bullet = InstaniateOrSpawn(bullet, gameObject.transform);
+
+                Vector2 direction = new Vector2(Mathf.Sin(fireAngle * Mathf.Deg2Rad), Mathf.Cos(fireAngle * Mathf.Deg2Rad));
+                bullet.transform.right = direction;
+
+                bullets.Add(bullet.GetComponent<BulletMove>());
+
+                fireAngle += 45;
+                if (fireAngle >= 360)
+                {
+                    fireAngle -= 360;
+                }
+
+            }
+            StartCoroutine(BulletAcceleration(bullets.ToArray(), accel));
+            bullets.Clear();
+            fireAngle += 5;
+            accel += 0.1f;
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    IEnumerator BulletAcceleration(BulletMove[] bullets, float accel)
+    {
+        foreach(var bulletItem in bullets)
+        {
+            bulletItem.GetComponent<BulletMove>().bulletSpd = 10f;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        foreach (var bulletItem in bullets)
+        {
+            bulletItem.GetComponent<BulletMove>().bulletSpd = 0.8f + accel;
+        }
+
+        yield return null;
+    }
+
     public GameObject InstaniateOrSpawn(GameObject bullet, Transform bulletSpawnPos)
     {
         if (PoolManager.Instance.transform.childCount > 0)
@@ -295,6 +421,7 @@ public class Boss : MonoBehaviour
         }
         bullet.transform.position = bulletSpawnPos.position;
         bullet.transform.SetParent(null);
+        bullet.GetComponent<BulletMove>().bulletSpd = 10;
 
         return bullet;
     } // pool
