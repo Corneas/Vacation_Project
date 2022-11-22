@@ -47,7 +47,12 @@ public class BulletMove : MonoSingleton<BulletMove>
         {
             if (gameObject.name == "PlayerBullet(Clone)")
             {
-
+                if (Vector2.Distance(gameObject.transform.position, Boss.Instance.transform.position) < damageRange)
+                {
+                    transform.SetParent(null);
+                    gameObject.SetActive(false);
+                    Boss.Instance.TakeDamage();
+                }
             }
             else if (gameObject.name == "EnemyBullet(Clone)")
             {

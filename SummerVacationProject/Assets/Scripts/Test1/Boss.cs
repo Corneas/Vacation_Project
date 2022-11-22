@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class Boss : MonoBehaviour
+public class Boss : MonoSingleton<Boss>
 {
     // 추후 FSM으로 패턴 나눠주기
     [SerializeField]
@@ -452,13 +452,9 @@ public class Boss : MonoBehaviour
         return bullet;
     } // pool
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void TakeDamage()
     {
-        if (collision.CompareTag("playerBullet"))
-        {
-            Debug.Log("BossHP : " + Base.Hp);
-            Base.Hp--;
-            Destroy(collision.gameObject);
-        }
+        Debug.Log("BossHP : " + Base.Hp);
+        Base.Hp--;
     }
 }
