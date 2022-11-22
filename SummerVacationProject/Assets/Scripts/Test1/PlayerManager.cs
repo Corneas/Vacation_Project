@@ -16,7 +16,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     private SpriteRenderer spriteRenderer = null;
 
     private bool isDamaged = false;
-    private bool isDead = false;
+    public bool isDead { private set; get; } = false;
 
     private void Start()
     {
@@ -102,23 +102,22 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         return bullet;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("enemyBullet"))
-        {
-            collision.transform.SetParent(null);
-            collision.gameObject.SetActive(false);
-            TakeDamage();
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("enemyBullet"))
+    //    {
+    //        collision.transform.SetParent(null);
+    //        collision.gameObject.SetActive(false);
+    //        TakeDamage();
+    //    }
+    //}
 
-    private void TakeDamage()
+    public void TakeDamage()
     {
         if (isDead) return;
         if (!isDamaged)
         {
             isDamaged = true;
-            //GameManager.Instance.Dead();
             Base.Hp--;
             Debug.Log("PlayerHP : " + Base.Hp);
             if(Base.Hp <= 0)

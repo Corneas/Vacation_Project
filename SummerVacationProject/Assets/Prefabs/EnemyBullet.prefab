@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1086887844835696897}
   - component: {fileID: 1086887844835696910}
-  - component: {fileID: 1086887844835696896}
   - component: {fileID: 6205868183228173605}
   m_Layer: 0
   m_Name: EnemyBullet
@@ -86,22 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1086887844835696896
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1086887844835696911}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.49999997
 --- !u!114 &6205868183228173605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,3 +98,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpd: 10
+  damageRange: 0.1

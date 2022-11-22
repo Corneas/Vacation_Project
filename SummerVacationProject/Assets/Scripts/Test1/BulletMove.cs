@@ -5,6 +5,8 @@ using UnityEngine;
 public class BulletMove : MonoSingleton<BulletMove>
 {
     public float bulletSpd = 10f;
+    [SerializeField]
+    private float damageRange = 0.1f;
 
     private void OnEnable()
     {
@@ -13,6 +15,8 @@ public class BulletMove : MonoSingleton<BulletMove>
 
     private void Update()
     {
+        CollisionObject();
+
         transform.Translate(Vector3.right * bulletSpd * Time.deltaTime, Space.Self);
 
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
@@ -34,6 +38,27 @@ public class BulletMove : MonoSingleton<BulletMove>
         else
         {
             transform.SetParent(PoolManager.Instance.transform);
+        }
+    }
+
+    public void CollisionObject()
+    {
+        if (!PlayerManager.Instance.isDead)
+        {
+            if (gameObject.name == "PlayerBullet(Clone)")
+            {
+
+            }
+            else if (gameObject.name == "EnemyBullet(Clone)")
+            {
+                if (Vector2.Distance(gameObject.transform.position, PlayerManager.Instance.transform.position) < damageRange)
+                {
+                    transform.SetParent(null);
+                    gameObject.SetActive(false);
+                    PlayerManager.Instance.TakeDamage();
+                    Debug.Log("Ãæµ¹");
+                }
+            }
         }
     }
 
