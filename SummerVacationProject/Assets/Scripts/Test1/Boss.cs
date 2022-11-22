@@ -74,9 +74,11 @@ public class Boss : MonoSingleton<Boss>
         yield return new WaitForSeconds(10f);
 
         StartCoroutine(CircleFire2());
-        yield return new WaitForSeconds(13f);
+        yield return new WaitForSeconds(10f);
 
         StartCoroutine(BulletArcFireDown());
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(CircleFireNCircleFireVortex());
 
         yield return null;
     }
@@ -416,10 +418,10 @@ public class Boss : MonoSingleton<Boss>
         transform.DOMove(Vector3.zero, 1f);
         yield return new WaitForSeconds(1f);
 
-        float fireAngle = -45f;
-        for(int i = 0; i < 8; ++i)
+        float fireAngle = 0f;
+        for(int i = 0; i < 40; ++i)
         {
-            for(int j = 0; j < 9; ++j)
+            for (int j = 0; j < 9; ++j)
             {
                 GameObject bullet = null;
 
@@ -428,10 +430,77 @@ public class Boss : MonoSingleton<Boss>
                 Vector2 direction = new Vector2(Mathf.Sin(fireAngle * Mathf.Deg2Rad), Mathf.Cos(fireAngle * Mathf.Deg2Rad));
                 bullet.transform.right = direction;
 
-                fireAngle -= 10;
+                fireAngle += 10;
             }
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    IEnumerator CircleFireNCircleFireVortex()
+    {
+        StartCoroutine(Circle());
+        StartCoroutine(Vortex());
+
+
+        yield return null;
+    }
+
+    IEnumerator Circle()
+    {
+        float fireAngle = 0f;
+        float angle = 5f;
+
+        for(int j = 0; j < 20; ++j)
+        {
+            fireAngle = j % 2 == 0 ? 0 : 2.5f;
+            for (int i = 0; i < 120; ++i)
+            {
+                GameObject bullet = null;
+
+                bullet = InstaniateOrSpawn(bullet, gameObject.transform);
+                bullet.GetComponent<BulletMove>().bulletSpd = 2f;
+
+                Vector2 direction = new Vector2(Mathf.Cos(fireAngle * Mathf.Deg2Rad), Mathf.Sin(fireAngle * Mathf.Deg2Rad));
+                bullet.transform.right = direction;
+
+                fireAngle += angle;
+                if (fireAngle >= 360)
+                {
+                    fireAngle -= 360;
+                }
+            }
+
+            yield return new WaitForSeconds(1f);
+        }
+
+        yield return null;
+    }
+
+    IEnumerator Vortex()
+    {
+        float fireAngle = 15f;
+        float angle = 5f;
+
+        for (int i = 0; i < 360; ++i)
+        {
+            GameObject bullet = null;
+
+            bullet = InstaniateOrSpawn(bullet, gameObject.transform);
+            bullet.GetComponent<BulletMove>().bulletSpd = 2.5f;
+
+            Vector2 direction = new Vector2(Mathf.Sin(fireAngle * Mathf.Deg2Rad), Mathf.Cos(fireAngle * Mathf.Deg2Rad));
+            bullet.transform.right = direction;
+
+            fireAngle += angle;
+            if (fireAngle >= 360)
+            {
+                fireAngle -= 360;
+            }
+
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        yield return null;
     }
 
     public GameObject InstaniateOrSpawn(GameObject bullet, Transform bulletSpawnPos)
