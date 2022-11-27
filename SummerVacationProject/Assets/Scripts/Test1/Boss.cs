@@ -51,34 +51,36 @@ public class Boss : MonoSingleton<Boss>
     {
         yield return new WaitForSeconds(3f);
 
-        //Pattern 1
-        StartCoroutine(CircleFire());
-        yield return new WaitForSeconds(10f);
+        ////Pattern 1
+        //StartCoroutine(CircleFire());
+        //yield return new WaitForSeconds(10f);
 
-        bezierCurveMoveSpeed = 1f;
-        StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
-        yield return new WaitForSeconds(2f);
+        //bezierCurveMoveSpeed = 1f;
+        //StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
+        //yield return new WaitForSeconds(2f);
 
-        //Pattern2
-        StartCoroutine(CircleFireGoto());
-        yield return new WaitForSeconds(5f);
+        ////Pattern2
+        //StartCoroutine(CircleFireGoto());
+        //yield return new WaitForSeconds(5f);
 
-        //Pattern3
-        StartCoroutine(SpawnCircleBullets());
-        yield return new WaitForSeconds(6f);
+        ////Pattern3
+        //StartCoroutine(SpawnCircleBullets());
+        //yield return new WaitForSeconds(6f);
 
-        StartCoroutine(Pattern3());
-        yield return new WaitForSeconds(12f);
+        //StartCoroutine(Pattern3());
+        //yield return new WaitForSeconds(12f);
 
-        StartCoroutine(CircleFireNCircleFireGoto());
-        yield return new WaitForSeconds(10f);
+        //StartCoroutine(CircleFireNCircleFireGoto());
+        //yield return new WaitForSeconds(10f);
 
-        StartCoroutine(CircleFire2());
-        yield return new WaitForSeconds(10f);
+        //StartCoroutine(CircleFire2());
+        //yield return new WaitForSeconds(10f);
 
-        StartCoroutine(BulletArcFireDown());
-        yield return new WaitForSeconds(1f);
-        StartCoroutine(CircleFireNCircleFireVortex());
+        //StartCoroutine(BulletArcFireDown());
+        //yield return new WaitForSeconds(1f);
+        //StartCoroutine(CircleFireNCircleFireVortex());
+
+        StartCoroutine(DoubleCircleFire());
 
         yield return null;
     }
@@ -396,23 +398,6 @@ public class Boss : MonoSingleton<Boss>
         }
     }
 
-    IEnumerator BulletAcceleration(BulletMove[] bullets, float accel)
-    {
-        foreach(var bulletItem in bullets)
-        {
-            bulletItem.GetComponent<BulletMove>().bulletSpd = 10f;
-        }
-
-        yield return new WaitForSeconds(0.1f);
-
-        foreach (var bulletItem in bullets)
-        {
-            bulletItem.GetComponent<BulletMove>().bulletSpd = 0.8f + accel;
-        }
-
-        yield return null;
-    }
-
     IEnumerator BulletArcFireDown()
     {
         transform.DOMove(Vector3.zero, 1f);
@@ -438,26 +423,26 @@ public class Boss : MonoSingleton<Boss>
 
     IEnumerator CircleFireNCircleFireVortex()
     {
-        StartCoroutine(Circle());
+        StartCoroutine(Circle(gameObject.transform, 20));
         StartCoroutine(Vortex());
 
 
         yield return null;
     }
 
-    IEnumerator Circle()
+    IEnumerator Circle(Transform parentTransform, int repeat)
     {
         float fireAngle = 0f;
         float angle = 5f;
 
-        for(int j = 0; j < 20; ++j)
+        for(int j = 0; j < repeat; ++j)
         {
             fireAngle = j % 2 == 0 ? 0 : 2.5f;
             for (int i = 0; i < 120; ++i)
             {
                 GameObject bullet = null;
 
-                bullet = InstaniateOrSpawn(bullet, gameObject.transform);
+                bullet = InstaniateOrSpawn(bullet, parentTransform);
                 bullet.GetComponent<BulletMove>().bulletSpd = 2f;
 
                 Vector2 direction = new Vector2(Mathf.Cos(fireAngle * Mathf.Deg2Rad), Mathf.Sin(fireAngle * Mathf.Deg2Rad));
@@ -498,6 +483,42 @@ public class Boss : MonoSingleton<Boss>
             }
 
             yield return new WaitForSeconds(0.05f);
+        }
+
+        yield return null;
+    }
+
+    IEnumerator DoubleCircleFire()
+    {
+        GameObject lLocation = new GameObject();
+        GameObject rLocation = new GameObject();
+        Vector3 pos = transform.position;
+        pos.x += 1.5f;
+        rLocation.transform.position = pos;
+        pos.x = -pos.x;
+        lLocation.transform.position = pos;
+
+        StartCoroutine(Circle(rLocation.transform, 10));
+
+        StartCoroutine(Circle(lLocation.transform, 10));
+
+        yield return null;
+    }
+
+    // ÆÐÅÏX
+    
+    IEnumerator BulletAcceleration(BulletMove[] bullets, float accel)
+    {
+        foreach(var bulletItem in bullets)
+        {
+            bulletItem.GetComponent<BulletMove>().bulletSpd = 10f;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        foreach (var bulletItem in bullets)
+        {
+            bulletItem.GetComponent<BulletMove>().bulletSpd = 0.8f + accel;
         }
 
         yield return null;
