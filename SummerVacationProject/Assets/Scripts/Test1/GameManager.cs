@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    public float minPosX = 0.02f;
+    public float maxPosX = 0.98f;
+    public float minPosY = 0.02f;
+    public float maxPosY = 0.02f;
+
     //public void Dead()
     //{
     //    if(PlayerManager.Instance.Base.Hp <= 0)

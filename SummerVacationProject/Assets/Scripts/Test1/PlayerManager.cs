@@ -57,8 +57,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
         Vector3 playerPos = Camera.main.WorldToViewportPoint(transform.position);
 
-        playerPos.x = Mathf.Clamp(playerPos.x, 0.05f, 0.95f);
-        playerPos.y = Mathf.Clamp(playerPos.y, 0.05f, 0.95f);
+        playerPos.x = Mathf.Clamp(playerPos.x, GameManager.Instance.minPosX, GameManager.Instance.maxPosX);
+        playerPos.y = Mathf.Clamp(playerPos.y, GameManager.Instance.minPosY, GameManager.Instance.maxPosY);
 
         transform.position = Camera.main.ViewportToWorldPoint(playerPos);
     }
