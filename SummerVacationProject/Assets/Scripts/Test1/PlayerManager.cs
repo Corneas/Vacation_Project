@@ -27,7 +27,10 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
     private void Update()
     {
-        Move();
+        if (Input.anyKey)
+        {
+            Move();
+        }
     }
 
     // W A S D ¡∂¿€
@@ -54,8 +57,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
         Vector3 playerPos = Camera.main.WorldToViewportPoint(transform.position);
 
-        playerPos.x = Mathf.Clamp01(playerPos.x);
-        playerPos.y = Mathf.Clamp01(playerPos.y);
+        playerPos.x = Mathf.Clamp(playerPos.x, 0.05f, 0.95f);
+        playerPos.y = Mathf.Clamp(playerPos.y, 0.05f, 0.95f);
 
         transform.position = Camera.main.ViewportToWorldPoint(playerPos);
     }
