@@ -292,6 +292,7 @@ public class Boss : MonoSingleton<Boss>
         yield return null;
     }
 
+    // 함수 이름 변경필요 (함수명만 보고는 무슨 패턴인지 모름)
     IEnumerator CircleFire2()
     {
         float fireAngle = 0f;
