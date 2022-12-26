@@ -164,7 +164,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 765.6
-    height: 370.4
+    height: 350.4
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 16}
@@ -190,8 +190,8 @@ MonoBehaviour:
     x: 0
     y: 370.4
     width: 765.6
-    height: 352.4
-  m_MinSize: {x: 201, y: 221}
+    height: 372.4
+  m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
