@@ -27,15 +27,12 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
     private void Update()
     {
-        if (Input.anyKey)
-        {
-            Move();
-        }
+        Move();
     }
 
-    // W A S D Á¶ÀÛ
-    // ±âº»°ø°Ý : ¸¶¿ì½º ÁÂÅ¬¸¯
-    // ½ºÆä¼È°ø°Ý : ¸¶¿ì½º ¿ìÅ¬¸¯
+    // W A S D ï¿½ï¿½ï¿½ï¿½
+    // ï¿½âº»ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Å¬ï¿½ï¿½
+    // ï¿½ï¿½ï¿½ï¿½È°ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Å¬ï¿½ï¿½
 
     private void Move()
     {
@@ -57,8 +54,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
         Vector3 playerPos = Camera.main.WorldToViewportPoint(transform.position);
 
-        playerPos.x = Mathf.Clamp(playerPos.x, GameManager.Instance.minPosX, GameManager.Instance.maxPosX);
-        playerPos.y = Mathf.Clamp(playerPos.y, GameManager.Instance.minPosY, GameManager.Instance.maxPosY);
+        playerPos.x = Mathf.Clamp01(playerPos.x);
+        playerPos.y = Mathf.Clamp01(playerPos.y);
 
         transform.position = Camera.main.ViewportToWorldPoint(playerPos);
     }
@@ -80,7 +77,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
             }
             if (Input.GetMouseButtonDown(1))
             {
-                // ½ºÆä¼È°ø°Ý
+                // ï¿½ï¿½ï¿½ï¿½È°ï¿½ï¿½ï¿½
             }
 
             yield return null;
@@ -151,7 +148,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         if (isDead)
         {
             gameObject.SetActive(false);
-            Debug.Log("»ç¸Á!");
+            Debug.Log("ï¿½ï¿½ï¿½!");
         }
     }
 }
