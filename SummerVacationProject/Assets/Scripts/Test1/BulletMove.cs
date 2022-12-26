@@ -1,24 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class BulletMove : MonoSingleton<BulletMove>
 {
     public float bulletSpd = 10f;
     [SerializeField]
     private float damageRange = 0.1f;
-
-    private IObjectPool<BulletMove> bulletPool;
-    public void SetPool(IObjectPool<BulletMove> pool)
-    {
-        Launcher.Instance.bulletPool = pool;
-    }
-
-    private void OnBecameInvisible()
-    {
-        Launcher.Instance.bulletPool.Release(this); // Ç®¸µ
-    }
 
     private void OnEnable()
     {
@@ -39,7 +27,6 @@ public class BulletMove : MonoSingleton<BulletMove>
         transform.position = Camera.main.ViewportToWorldPoint(pos);
 
     }
-
 
     public void Pool()
     {

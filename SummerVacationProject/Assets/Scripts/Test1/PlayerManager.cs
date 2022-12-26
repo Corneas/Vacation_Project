@@ -41,7 +41,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-            
+
         Vector3 dir = new Vector3(h, v, 0).normalized;
 
         if (Input.GetKey(KeyCode.LeftShift))
