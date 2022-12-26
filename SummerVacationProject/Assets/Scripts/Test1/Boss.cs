@@ -51,34 +51,34 @@ public class Boss : MonoSingleton<Boss>
     {
         yield return new WaitForSeconds(3f);
 
-        //Pattern 1
-        StartCoroutine(CircleFire());
-        yield return new WaitForSeconds(10f);
+        ////Pattern 1
+        //StartCoroutine(CircleFire());
+        //yield return new WaitForSeconds(10f);
 
-        bezierCurveMoveSpeed = 1f;
-        StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
-        yield return new WaitForSeconds(2f);
+        //bezierCurveMoveSpeed = 1f;
+        //StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
+        //yield return new WaitForSeconds(2f);
 
-        //Pattern2
-        StartCoroutine(CircleFireGoto());
-        yield return new WaitForSeconds(5f);
+        ////Pattern2
+        //StartCoroutine(CircleFireGoto());
+        //yield return new WaitForSeconds(5f);
 
-        //Pattern3
-        StartCoroutine(SpawnCircleBullets());
-        yield return new WaitForSeconds(6f);
+        ////Pattern3
+        //StartCoroutine(SpawnCircleBullets());
+        //yield return new WaitForSeconds(6f);
 
-        StartCoroutine(Pattern3());
-        yield return new WaitForSeconds(12f);
+        //StartCoroutine(Pattern3());
+        //yield return new WaitForSeconds(12f);
 
-        StartCoroutine(CircleFireNCircleFireGoto());
-        yield return new WaitForSeconds(10f);
+        //StartCoroutine(CircleFireNCircleFireGoto());
+        //yield return new WaitForSeconds(10f);
 
-        StartCoroutine(CircleFire2());
-        yield return new WaitForSeconds(10f);
+        //StartCoroutine(CircleFire2());
+        //yield return new WaitForSeconds(10f);
 
-        StartCoroutine(BulletArcFireDown());
-        yield return new WaitForSeconds(1f);
-        StartCoroutine(CircleFireNCircleFireVortex());
+        //StartCoroutine(BulletArcFireDown());
+        //yield return new WaitForSeconds(1f);
+        //StartCoroutine(CircleFireNCircleFireVortex());
 
         StartCoroutine(DoubleCircleFire());
 
@@ -426,6 +426,7 @@ public class Boss : MonoSingleton<Boss>
     {
         StartCoroutine(Circle(gameObject.transform, 20));
         StartCoroutine(Vortex());
+
 
         yield return null;
     }
