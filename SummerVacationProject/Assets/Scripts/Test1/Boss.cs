@@ -546,5 +546,15 @@ public class Boss : MonoSingleton<Boss>
     {
         Debug.Log("BossHP : " + Base.Hp);
         Base.Hp--;
+        if(Base.Hp <= 0)
+        {
+            BossDead();
+        }
+    }
+
+    public void BossDead()
+    {
+        Debug.Log("Boss Dead!");
+        gameObject.SetActive(false);
     }
 }
