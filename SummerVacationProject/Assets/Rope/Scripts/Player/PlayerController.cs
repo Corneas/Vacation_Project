@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     private bool isGround;
     #endregion
 
+    private float curTime = 0;
+    private float coolTime = 1f;
+
 
     FixedJoint2D fixjoint;
 
@@ -27,14 +30,27 @@ public class PlayerController : MonoBehaviour
         fixjoint = GetComponent<FixedJoint2D>();
         myrigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        fixjoint.connectedBody = null;
+        fixjoint.enabled = false;
+        isRope = false;
     }
 
     private void Update()
     {
+        curTime += Time.deltaTime;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            if (!isRope)
+            {
+                return;
+            }
+
+            curTime = 0f;
             fixjoint.connectedBody = null;
             fixjoint.enabled = false;
+            isRope = false;
         }
     }
     private void FixedUpdate()
@@ -75,7 +91,7 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         if (isGround == true) {
-            if (Input.GetAxis("Jump") != 0) {
+            if (Input.GetKeyDown(KeyCode.W)) {
                 myrigidbody.velocity = Vector2.up * jumpPower;
                 animator.SetTrigger("Jump");
             }
@@ -86,8 +102,9 @@ public class PlayerController : MonoBehaviour
     bool isRope = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Rope") && !isRope)
-        {            
+        if (collision.CompareTag("Rope") && !isRope && curTime >= coolTime)
+        {
+            Debug.Log("닿음");
             Rigidbody2D rig = collision.gameObject.GetComponent<Rigidbody2D>();
             fixjoint.enabled = true;
             fixjoint.connectedBody = rig;
