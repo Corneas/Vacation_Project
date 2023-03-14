@@ -59,6 +59,7 @@ public partial class BulletPattern
                 fireAngle -= 360;
             }
 
+            // 중간에 살짝씩 멈춰줌으로 회오리 모양의 탄막 생성
             yield return new WaitForSeconds(0.05f);
         }
 
@@ -83,8 +84,10 @@ public partial class BulletPattern
 
         for (int i = 0; i < bulletMoves.Length; ++i)
         {
+            // 벡터 내적
             var rot = (target.transform.position - bulletMoves[i].transform.position).normalized;
 
+            // Atan2를 이용하여 타깃까지의 방향 설정
             var angle = Mathf.Atan2(rot.y, rot.x) * Mathf.Rad2Deg;
 
             bulletMoves[i].transform.rotation = Quaternion.Euler(0, 0, angle);

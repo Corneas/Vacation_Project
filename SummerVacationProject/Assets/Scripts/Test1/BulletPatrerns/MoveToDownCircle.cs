@@ -12,7 +12,6 @@ public partial class BulletPattern
 
         for (int j = 0; j < bulletSpawnPos_Pattern3.Length; ++j)
         {
-            Debug.Log(j + "번째\n");
             for (int i = 0; i <= 360; i += 13)
             {
                 GameObject bullet = null;
@@ -47,7 +46,7 @@ public partial class BulletPattern
         }
     }
 
-    IEnumerator Pattern3()
+    IEnumerator RotateCircle()
     {
         transform.DOMove(Vector3.zero, 1f);
         yield return new WaitForSeconds(1f);
@@ -62,6 +61,7 @@ public partial class BulletPattern
             {
                 GameObject bullet = null;
 
+                // 원 생성 후 부모 오브젝트 회전
                 bullet = InstaniateOrSpawn(bullet, gameObject.transform);
                 Vector2 direction = new Vector2(Mathf.Cos(fireAngle * Mathf.Deg2Rad), Mathf.Sin(fireAngle * Mathf.Deg2Rad));
                 bullet.transform.SetParent(rotateBulletParent.transform);

@@ -33,7 +33,7 @@ public class BulletMove : MonoSingleton<BulletMove>
         gameObject.SetActive(false);
         if(gameObject.name == "PlayerBullet(Clone)")
         {
-            transform.SetParent(PlayerManager.Instance.transform);
+            // transform.SetParent(PlayerManager.Instance.transform);
         }
         else
         {
@@ -60,7 +60,7 @@ public class BulletMove : MonoSingleton<BulletMove>
                 {
                     transform.SetParent(null);
                     gameObject.SetActive(false);
-                    PlayerManager.Instance.TakeDamage();
+                     PlayerManager.Instance.TakeDamage();
                     Debug.Log("Ãæµ¹");
                 }
             }

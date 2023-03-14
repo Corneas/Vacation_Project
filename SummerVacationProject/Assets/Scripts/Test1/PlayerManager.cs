@@ -102,15 +102,15 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         return bullet;
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("enemyBullet"))
-    //    {
-    //        collision.transform.SetParent(null);
-    //        collision.gameObject.SetActive(false);
-    //        TakeDamage();
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("enemyBullet"))
+        {
+            collision.transform.SetParent(null);
+            collision.gameObject.SetActive(false);
+            TakeDamage();
+        }
+    }
 
     public void TakeDamage()
     {
@@ -118,14 +118,14 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         if (!isDamaged)
         {
             isDamaged = true;
-            Base.Hp--;
-            Debug.Log("PlayerHP : " + Base.Hp);
-            if(Base.Hp <= 0)
-            {
-                isDead = true;
-                Dead();
-                return;
-            }
+            //Base.Hp--;
+            //Debug.Log("PlayerHP : " + Base.Hp);
+            //if(Base.Hp <= 0)
+            //{
+            //    isDead = true;
+            //    Dead();
+            //    return;
+            //}
             StartCoroutine(Damaged());
         }
     }

@@ -18,6 +18,7 @@ public partial class BulletPattern
 
                 bullet = InstaniateOrSpawn(bullet, gameObject.transform);
 
+                // Åº¸· ¿øÇü¼ÒÈ¯ ÈÄ
                 Vector2 direction = new Vector2(Mathf.Cos(fireAngle * Mathf.Deg2Rad), Mathf.Sin(fireAngle * Mathf.Deg2Rad));
                 bullet.transform.right = direction;
 
@@ -30,6 +31,7 @@ public partial class BulletPattern
                 }
 
             }
+            // ÃÑ¾Ë ¼Óµµ Á¶Àý
             StartCoroutine(BulletAcceleration(bullets.ToArray(), accel));
             bullets.Clear();
             fireAngle += 5;
@@ -60,6 +62,7 @@ public partial class BulletPattern
                     Vector2 direction = new Vector2(Mathf.Sin(fireAngle * Mathf.Deg2Rad), Mathf.Cos(fireAngle * Mathf.Deg2Rad));
                     bullet.transform.right = direction;
 
+                    // ÃÑ¾ËÀÌ ¹ß»çµÇ´Â °¢µµ¸¦ °è¼Ó ¹Ù²ãÁÜ
                     fireAngle += 120;
                     if (fireAngle >= 360)
                     {
@@ -95,6 +98,7 @@ public partial class BulletPattern
 
                 bullets.Add(bullet.GetComponent<BulletMove>());
 
+                // ÃÑ¾ËÀÌ ¹ß»çµÇ´Â °¢µµ¸¦ °è¼Ó ¹Ù²ãÁÜ
                 fireAngle += 45;
                 if (fireAngle >= 360)
                 {

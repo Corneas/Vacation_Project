@@ -5,7 +5,6 @@ using DG.Tweening;
 
 public partial class BulletPattern : MonoSingleton<BulletPattern>
 {
-    // 추후 FSM으로 패턴 나눠주기
     [SerializeField]
     private GameObject bulletPre;
     [SerializeField]
@@ -22,7 +21,6 @@ public partial class BulletPattern : MonoSingleton<BulletPattern>
 
     private bool doPattern = false;
 
-    // Dialogue 기능 추가 예정
     private void Start() 
     {
         for(int i = 0; i < 100; ++i)
@@ -47,55 +45,83 @@ public partial class BulletPattern : MonoSingleton<BulletPattern>
 
     IEnumerator InputKey()
     {
-        //Pattern 1
+        // Pattern 1
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            doPattern = true;
+            //doPattern = true;
             StartCoroutine(CircleFire());
             yield return new WaitForSeconds(10f);
-            doPattern = false;
+            //doPattern = false;
         }
 
+        // Pattern 2
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            doPattern = true;
+            //doPattern = true;
             bezierCurveMoveSpeed = 1f;
             StartCoroutine(BezierCurve.Instance.BezierCurveMove(gameObject, bezierCurveMovePos[0], bezierCurveMovePos[1], bezierCurveMovePos[2], bezierCurveMovePos[3], bezierCurveMoveSpeed));
             yield return new WaitForSeconds(2f);
             StartCoroutine(CircleFireGoto());
             yield return new WaitForSeconds(5f);
-            doPattern = false;
+            transform.DOMove(Vector3.zero, 1f);
+            //doPattern = false;
         }
+
+        // Pattern 3
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            doPattern = true;
+            //doPattern = true;
             StartCoroutine(SpawnCircleBullets());
             yield return new WaitForSeconds(6f);
-            doPattern = false;
+            //doPattern = false;
         }
 
+        // Pattern 4
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            doPattern = true;
-            StartCoroutine(Pattern3());
+            //doPattern = true;
+            StartCoroutine(RotateCircle());
             yield return new WaitForSeconds(12f);
-            doPattern = false;
+            //doPattern = false;
         }
 
-        StartCoroutine(CircleFireNCircleFireGoto());
-        yield return new WaitForSeconds(10f);
+        // Pattern 5
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            //doPattern = true;
+            StartCoroutine(CircleFireNCircleFireGoto());
+            yield return new WaitForSeconds(10f);
+            //doPattern = false;
+        }
 
-        StartCoroutine(CircleFire2());
-        yield return new WaitForSeconds(10f);
+        // Pattern 6
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            //doPattern = true;
+            StartCoroutine(CircleFire2());
+            yield return new WaitForSeconds(10f);
+            //doPattern = false;
+        }
 
-        StartCoroutine(BulletArcFireDown());
-        yield return new WaitForSeconds(1f);
-        StartCoroutine(CircleFireNCircleFireVortex());
+        // Pattern 7
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            //doPattern = true;
+            StartCoroutine(BulletArcFireDown());
+            yield return new WaitForSeconds(1f);
+            StartCoroutine(CircleFireNCircleFireVortex());
+            //doPattern = false;
+        }
 
-        StartCoroutine(DoubleCircleFire());
+        // Pattern 8
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            //doPattern = true;
+            StartCoroutine(DoubleCircleFire());
+            //doPattern = false;
+        }
 
         yield return null;
     }
 
-    // 패턴X
 }

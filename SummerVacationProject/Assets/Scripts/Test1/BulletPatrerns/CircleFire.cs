@@ -19,7 +19,9 @@ public partial class BulletPattern
 
                 bullet = InstaniateOrSpawn(bullet, gameObject.transform);
 
+                // x좌표를 코사인, y좌표를 사인으로 할당하여 반시계 방향으로 움직이는 벡터
                 Vector2 direction = new Vector2(Mathf.Cos(fireAngle * Mathf.Deg2Rad), Mathf.Sin(fireAngle * Mathf.Deg2Rad));
+                // 이차원 좌표평면에서는 오른쪽을 향해야 값이 상승
                 bullet.transform.right = direction;
 
                 fireAngle += angle;

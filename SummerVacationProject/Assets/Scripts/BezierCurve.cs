@@ -23,14 +23,19 @@ public class BezierCurve : MonoSingleton<BezierCurve>
 
     public Vector3 BezierTest(Vector3 _P1, Vector3 _P2, Vector3 _P3, Vector3 _P4, float value)
     {
+        // 점 3개를 서로 선형보간
         Vector3 A = Vector3.Lerp(_P1, _P2, value);
         Vector3 B = Vector3.Lerp(_P2, _P3, value);
         Vector3 C = Vector3.Lerp(_P3, _P4, value);
 
+        // 위에서 러프한 점을 다시 선형보간
         Vector3 D = Vector3.Lerp(A, B, value);
         Vector3 E = Vector3.Lerp(B, C, value);
 
+        // 위에서 또다시 선형보간한 점을 다시 선형보간
         Vector3 F = Vector3.Lerp(D, E, value);
+
+        // 참고 : https://rito15.github.io/posts/unity-study-bezier-curve/
 
         return F;
     }
