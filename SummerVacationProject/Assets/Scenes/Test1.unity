@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 524087385}
   - component: {fileID: 524087384}
   - component: {fileID: 524087388}
+  - component: {fileID: 524087389}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -322,7 +323,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 524087383}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 392bea336443cab4280f64c93340e7ba, type: 3}
   m_Name: 
@@ -341,6 +342,20 @@ MonoBehaviour:
   - {x: 0, y: 4, z: 0}
   - {x: 4, y: -4, z: 0}
   - {x: 4, y: 3.5, z: 0}
+  Base: {fileID: 0}
+--- !u!114 &524087389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524087383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35b6f08f0360c13418a0998ab21fcd2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPre: {fileID: 6704768033440033418, guid: 5a5bf0fdbdbe8ec4fa3ae4a48b83e34b, type: 3}
 --- !u!1 &613780494
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,7 +404,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &625066606
 Transform:
   m_ObjectHideFlags: 0

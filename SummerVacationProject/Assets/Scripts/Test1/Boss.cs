@@ -31,7 +31,7 @@ public class Boss : MonoSingleton<Boss>
         {
             var bulletObj = Instantiate(bulletPre, transform.position, Quaternion.identity);
             bulletObj.SetActive(false);
-            bulletObj.transform.SetParent(PoolManager.Instance.transform);
+            //bulletObj.transform.SetParent(PoolManager.Instance.transform);
         }
 
         StartCoroutine(BossPattern());
@@ -526,15 +526,15 @@ public class Boss : MonoSingleton<Boss>
 
     public GameObject InstaniateOrSpawn(GameObject bullet, Transform bulletSpawnPos)
     {
-        if (PoolManager.Instance.transform.childCount > 0)
-        {
-            bullet = PoolManager.Instance.transform.GetChild(0).gameObject;
-            bullet.SetActive(true);
-        }
-        else if (PoolManager.Instance.transform.childCount <= 0)
-        {
-            bullet = Instantiate(bulletPre, transform.position, Quaternion.identity);
-        }
+        //if (PoolManager.Instance.transform.childCount > 0)
+        //{
+        //    bullet = PoolManager.Instance.transform.GetChild(0).gameObject;
+        //    bullet.SetActive(true);
+        //}
+        //else if (PoolManager.Instance.transform.childCount <= 0)
+        //{
+        //    bullet = Instantiate(bulletPre, transform.position, Quaternion.identity);
+        //}
         bullet.transform.position = bulletSpawnPos.position;
         bullet.transform.SetParent(null);
         bullet.GetComponent<BulletMove>().bulletSpd = 10;

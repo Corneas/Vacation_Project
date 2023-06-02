@@ -8,8 +8,17 @@ public class BulletMove : MonoSingleton<BulletMove>
     [SerializeField]
     private float damageRange = 0.1f;
 
+    private Poolable poolable;
+
+    WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
+    private void Awake()
+    {
+        poolable = GetComponent<Poolable>();
+    }
+
     private void OnEnable()
     {
+        transform.position = Vector3.zero;
         bulletSpd = 10f;
     }
 
@@ -20,7 +29,7 @@ public class BulletMove : MonoSingleton<BulletMove>
         transform.Translate(Vector3.right * bulletSpd * Time.deltaTime, Space.Self);
 
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
-        if (pos.x < 0f || pos.x > 1f || pos.y < 0f || pos.y > 15f)
+        if (pos.x < -2f || pos.x > 2f || pos.y < -2f || pos.y > 2f)
         {
             Pool();
         }
@@ -30,15 +39,7 @@ public class BulletMove : MonoSingleton<BulletMove>
 
     public void Pool()
     {
-        gameObject.SetActive(false);
-        if(gameObject.name == "PlayerBullet(Clone)")
-        {
-            // transform.SetParent(PlayerManager.Instance.transform);
-        }
-        else
-        {
-            transform.SetParent(PoolManager.Instance.transform);
-        }
+        Managers.Pool.Push(GetComponent<Poolable>());
     }
 
     public void CollisionObject()
@@ -64,6 +65,20 @@ public class BulletMove : MonoSingleton<BulletMove>
                     Debug.Log("Ãæµ¹");
                 }
             }
+        }
+    }
+
+    public IEnumerator Acc(float accel = 0.2f, float limitSpeed = 10f)
+    {
+        while(bulletSpd < limitSpeed)
+        {
+            bulletSpd += accel;
+            if(bulletSpd > limitSpeed)
+            {
+                bulletSpd = limitSpeed;
+            }
+
+            yield return waitForEndOfFrame;
         }
     }
 

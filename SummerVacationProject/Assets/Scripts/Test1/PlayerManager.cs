@@ -22,7 +22,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         Base = new PlayerBase();
-        StartCoroutine(Fire());
+        //StartCoroutine(Fire());
     }
 
     private void Update()
