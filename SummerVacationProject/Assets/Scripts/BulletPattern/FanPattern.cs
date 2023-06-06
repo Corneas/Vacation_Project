@@ -14,11 +14,16 @@ public class FanPattern : ShootingBase
 
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.1f);
 
-        for(int i = 0; i < 8; ++i)
+        for(int j = 0; j < 2; ++j)
         {
-            //StartCoroutine(IEVortexFire(5));
-            StartCoroutine(IEVortexTest(10 * i));
+            for (int i = 0; i < 8; ++i)
+            {
+                //StartCoroutine(IEVortexFire(5));
+                StartCoroutine(IEVortexTest(10 * i + (j * 180)));
+                //StartCoroutine(IEVortexTest());
+            }
         }
+
 
 
 
@@ -38,15 +43,15 @@ public class FanPattern : ShootingBase
         // fireCount번 발사
         for (int i = 0; i < 8; ++i)
         {
-            for (int j = 0; j < 36; ++j)
+            for (int j = 0; j < 8; ++j)
             {
                 Poolable bullet = null;
 
                 bullet = Managers.Pool.Pop(bulletPre);
 
-                // 삼각함수를 이용하여 원형으로 방향조절
+                //삼각함수를 이용하여 원형으로 방향조절
                 Vector2 direction = new Vector2(Mathf.Cos(fireAngle * Mathf.Deg2Rad), Mathf.Sin(fireAngle * Mathf.Deg2Rad));
-                // 2차원 수학식은 모두 X축이 기준이 되기 떄문에 x축인 right를 기준점으로 방향을 조절해줌
+                //2차원 수학식은 모두 X축이 기준이 되기 떄문에 x축인 right를 기준점으로 방향을 조절해줌
                 bullet.transform.right = direction;
 
                 fireAngle += angle;
