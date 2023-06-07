@@ -129,8 +129,8 @@ public abstract class ShootingBase : MonoBehaviour
 
         foreach (var bulletItem in bullets)
         {
-            bulletItem.bulletSpd = startSpeed;
-            StartCoroutine(bulletItem.Acc(accel, limitSpeed));
+            bulletItem.bulletSpd = startSpeed + accel;
+            //StartCoroutine(bulletItem.Acc(accel, limitSpeed));
         }
 
         yield return null;
