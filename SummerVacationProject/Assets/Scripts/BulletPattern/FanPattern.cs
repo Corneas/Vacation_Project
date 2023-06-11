@@ -14,17 +14,17 @@ public class FanPattern : ShootingBase
 
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.1f);
 
-        for(int j = 0; j < 2; ++j)
-        {
-            for (int i = 0; i < 8; ++i)
-            {
-                //StartCoroutine(IEVortexFire(5));
-                StartCoroutine(IEVortexTest(10 * i + (j * 180)));
-                //StartCoroutine(IEVortexTest());
-            }
-        }
+        //for(int j = 0; j < 2; ++j)
+        //{
+        //    for (int i = 0; i < 8; ++i)
+        //    {
+        //        //StartCoroutine(IEVortexFire(5));
+        //        StartCoroutine(IEVortexTest(10 * i + (j * 180)));
+        //        //StartCoroutine(IEVortexTest());
+        //    }
+        //}
 
-
+        StartCoroutine(IEVortexTest());
 
 
         yield break;

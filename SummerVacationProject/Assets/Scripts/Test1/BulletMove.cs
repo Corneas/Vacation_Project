@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletMove : MonoSingleton<BulletMove>
+public class BulletMove : MonoBehaviour
 {
     public float bulletSpd = 10f;
     [SerializeField]
@@ -39,7 +39,7 @@ public class BulletMove : MonoSingleton<BulletMove>
 
     public void Pool()
     {
-        Managers.Pool.Push(GetComponent<Poolable>());
+        Managers.Pool.Push(poolable);
     }
 
     public void CollisionObject()
