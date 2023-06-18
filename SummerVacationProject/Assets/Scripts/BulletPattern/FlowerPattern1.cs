@@ -6,15 +6,16 @@ public class FlowerPattern1 : ShootingBase
 {
     protected override void StartPattern()
     {
+        // TODO : 45, 135도는 방향 반대로
         StartCoroutine(IEFire(0f));
-        StartCoroutine(IEFire(45f));
+        StartCoroutine(IEFire(45f, -1f));
         StartCoroutine(IEFire(90f));
-        StartCoroutine(IEFire(135f));
+        StartCoroutine(IEFire(135f, -1f));
     }
 
 
 
-    public IEnumerator IEFire(float initRot)
+    public IEnumerator IEFire(float initRot, float dir = 1f)
     {
         float fireAngle = initRot;
         float angle = 5f;
@@ -34,9 +35,18 @@ public class FlowerPattern1 : ShootingBase
                 Poolable bullet = null;
 
                 bullet = Managers.Pool.Pop(bulletPre);
+                bullet.GetComponent<BulletMove>().bulletSpd = 3f;
+                Vector2 direction = Vector2.zero;
 
                 // 삼각함수를 이용하여 원형으로 방향조절
-                Vector2 direction = new Vector2(Mathf.Cos(fireAngle * Mathf.Deg2Rad), Mathf.Sin(fireAngle * Mathf.Deg2Rad));
+                if (dir == 1)
+                {
+                    direction = new Vector2(Mathf.Cos(fireAngle * Mathf.Deg2Rad), Mathf.Sin(fireAngle * Mathf.Deg2Rad));
+                }
+                else if(dir == -1)
+                {
+                    direction = new Vector2(Mathf.Sin(fireAngle * Mathf.Deg2Rad), Mathf.Cos(fireAngle * Mathf.Deg2Rad));
+                }
                 // 2차원 수학식은 모두 X축이 기준이 되기 떄문에 x축인 right를 기준점으로 방향을 조절해줌
                 bullet.transform.right = direction;
 
