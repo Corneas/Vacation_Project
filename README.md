@@ -1,2 +1,2 @@
 # Vacation_Project
-practice
+일단 무엇이든 해보는 곳
