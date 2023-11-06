@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Uss/MenuStyle.uss?fileID=7433441132597879392&amp;guid=3a2ed60333f9a1340bb099a25c2af7ed&amp;type=3#MenuStyle" />
+    <ui:VisualElement name="Container" style="height: 100%; width: 100%; background-color: rgba(0, 0, 0, 0); flex-wrap: nowrap; flex-direction: column; margin-top: 0;">
+        <ui:VisualElement name="Menu" style="flex-grow: 1; flex-direction: row;">
+            <ui:VisualElement name="LeftSection" style="background-color: rgba(0, 0, 0, 0.61); width: 45%; height: 100%; margin-left: 50px; align-items: center;">
+                <ui:VisualElement name="Logo">
+                    <ui:Label tabindex="-1" text="Let&apos;s Play&#10;Together!" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TitleText" style="color: rgb(255, 255, 255); font-size: 100px; -unity-text-align: middle-center; margin-top: 100px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Buttons" style="width: auto; height: auto; justify-content: center; flex-grow: 1; padding-bottom: 20%;">
+                    <ui:Button text="play" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PlayButton" class="menu-button" style="align-self: stretch;" />
+                    <ui:Button text="Setting" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SettingButton" class="menu-button" style="align-items: stretch; justify-content: flex-start; align-self: stretch;" />
+                    <ui:Button text="Exit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExitButton" enable-rich-text="true" class="menu-button" style="align-items: stretch; justify-content: flex-start; align-self: stretch;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="RightSection" style="flex-grow: 1;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
