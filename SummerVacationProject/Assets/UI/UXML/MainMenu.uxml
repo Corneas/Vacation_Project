@@ -6,7 +6,7 @@
                 <ui:VisualElement name="Logo">
                     <ui:Label tabindex="-1" text="Let&apos;s Play&#10;Together!" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TitleText" style="color: rgb(255, 255, 255); font-size: 100px; -unity-text-align: middle-center; margin-top: 100px;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="Buttons" style="width: auto; height: auto; justify-content: center; flex-grow: 1; padding-bottom: 20%;">
+                <ui:VisualElement name="Buttons" style="width: auto; height: auto; justify-content: space-around; flex-grow: 1; padding-bottom: 20%; padding-top: 20%;">
                     <ui:Button text="play" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PlayButton" class="menu-button" style="align-self: stretch;" />
                     <ui:Button text="Setting" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SettingButton" class="menu-button" style="align-items: stretch; justify-content: flex-start; align-self: stretch;" />
                     <ui:Button text="Exit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExitButton" enable-rich-text="true" class="menu-button" style="align-items: stretch; justify-content: flex-start; align-self: stretch;" />
